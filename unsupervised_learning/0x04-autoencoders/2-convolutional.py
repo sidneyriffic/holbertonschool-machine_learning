@@ -14,7 +14,6 @@ def autoencoder(input_dims, filters, latent_dims):
                                       padding="same")(latents)
         latents = keras.layers.MaxPool2D(padding="same")(latents)
     encoder = keras.Model(encodein, latents)
-    encoder.summary()
     decodein = keras.Input(shape=latent_dims)
     recons = decodein
     for layer in filters[::-1][:-1]:
@@ -27,8 +26,6 @@ def autoencoder(input_dims, filters, latent_dims):
     recons = keras.layers.Conv2D(input_dims[2], input_dims[0:2],
                                  activation="sigmoid", padding="same")(recons)
     decoder = keras.Model(decodein, recons)
-    decoder.summary()
-    autoencoder = keras.Model(encodein, decoder(latents))
-    autoencoder.summary()
+    autoencoder = keras.Model(encodein, decoder(encoder(encodein)))
     autoencoder.compile(optimizer="adam", loss="binary_crossentropy")
     return encoder, decoder, autoencoder
