@@ -17,8 +17,6 @@ def cumulative_bleu(references, sentence, n):
         brevity = 1
     else:
         brevity = np.exp(1 - closest / len(sentence))
-    print("brevity", brevity)
-    print(scores)
     return brevity * np.exp(sum(scores))
 
 
@@ -46,12 +44,8 @@ def ngramify(corpus, n):
 
 def ngram_modscore(references, sentence, n, weight):
     """Calculate unigram bleu score"""
-    print("n", n)
-    print("weight", weight)
     references = ngramify(references, n)
     sentence = ngramify(sentence, n)
-    print(references)
-    print(sentence)
     sent_dict = {}
     for gram in sentence:
         sent_dict[gram] = sent_dict.get(gram, 0) + 1
@@ -65,8 +59,4 @@ def ngram_modscore(references, sentence, n, weight):
     in_ref = 0
     for gram in sent_dict:
         in_ref += min(max_dict.get(gram, 0), sent_dict[gram])
-    print("debug stats")
-    print(in_ref)
-    print(len(sentence))
-    print(weight * np.log(in_ref / len(sentence)))
     return weight * np.log(in_ref / len(sentence))
