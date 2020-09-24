@@ -1,0 +1,4 @@
+model_checkpoint_path: "ratio-14313"
+all_model_checkpoint_paths: "ratio-14313"
+all_model_checkpoint_timestamps: 1600923783.2399595
+last_preserved_timestamp: 1600812472.0887454

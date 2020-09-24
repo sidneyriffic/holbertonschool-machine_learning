@@ -1,0 +1,1 @@
+768/768 [==============================] - 833s 1s/step - loss: 4.1005e-04 - tf_op_layer_mul_loss: 4.1005e-04 - price_loss: 0.0000e+00 - price_mean_squared_error: 18051.0566
