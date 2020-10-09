@@ -6,17 +6,6 @@ import tensorflow as tf
 sdp_attention = __import__('5-sdp_attention').sdp_attention
 
 
-def sdp_attention(Q, K, V, mask=None):
-    """Calculate scaled dot product attention"""
-
-    denom = tf.math.sqrt(tf.cast(tf.shape(K)[-1], tf.float32))
-    scaled = tf.matmul(Q, K, transpose_b=True) / denom
-    if mask is not None:
-        scaled = mask * -1e9 + scaled
-    scaled = tf.nn.softmax(scaled, axis=-1)
-    return tf.matmul(scaled, V), scaled
-
-
 class MultiHeadAttention(tf.keras.layers.Layer):
     """Calculate multi-head attention for a transformer"""
     def __init__(self, dm, h):

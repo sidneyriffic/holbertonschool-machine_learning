@@ -24,18 +24,15 @@ class DecoderBlock(tf.keras.layers.Layer):
     def call(self, x, encoder_output, training, look_ahead_mask,
              padding_mask):
         """Keras layer call"""
-        # print(x)
-        # print(encoder_output)
         start, weights1 = self.mha1(x, x, x, look_ahead_mask)
         start = self.dropout1(start, training=training)
         start = self.layernorm1(x + start)
-        # print(start)
-        mid, weights2 = self.mha2(encoder_output, encoder_output, start,
+        mid, weights2 = self.mha2(start, encoder_output, encoder_output,
                                   padding_mask)
         mid = self.dropout2(mid, training=training)
-        mid = self.layernorm2(start + mid, training=training)
+        mid = self.layernorm2(start + mid)
         out = self.dense_hidden(mid)
         out = self.dense_output(out)
         out = self.dropout3(out, training=training)
         out = self.layernorm3(mid + out)
-        return out, weights1, weights2
+        return out
