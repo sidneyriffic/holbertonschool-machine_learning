@@ -21,4 +21,7 @@ class Transformer(tf.keras.layers.Layer):
     def call(self, inputs, target, training, encoder_mask, look_ahead_mask,
              decoder_mask):
         """Keras layer call"""
-        return inputs
+        enc_out = self.encoder(inputs, training, encoder_mask)
+        dec_out = self.decoder(target, enc_out, training, look_ahead_mask,
+                               decoder_mask)
+        return self.linear(dec_out)

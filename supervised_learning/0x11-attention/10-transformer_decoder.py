@@ -23,4 +23,14 @@ class Decoder(tf.keras.layers.Layer):
     def call(self, x, encoder_output, training, look_ahead_mask,
              padding_mask):
         """Keras layer call"""
-        return encoder_output
+        seq_len = x.shape[1]
+
+        out = self.embedding(x)
+        out *= tf.math.sqrt(tf.cast(self.dm, tf.float32))
+        out += self.positional_encoding[:seq_len, :]
+        out = self.dropout(out, training=training)
+
+        for i in range(self.N):
+            out = self.blocks[i](out, encoder_output, training,
+                                 look_ahead_mask, padding_mask)
+        return out
