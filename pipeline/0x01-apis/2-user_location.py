@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Print location of a user via github api."""
+"""Print location of a user via github api"""
 
 
 import requests

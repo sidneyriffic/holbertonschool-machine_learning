@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Display soonest upcoming launch."""
+"""Display soonest upcoming launch"""
 
 
 import requests
@@ -24,6 +24,6 @@ if __name__ == '__main__':
                             + next['launchpad'])
         lpad = lpad.json()
         locale = lpad['locality']
-        lpad = lpad['full_name']
-        print('{} ({}) {} - {} ({})'.format(next['name'], next['date_utc'],
+        lpad = lpad['name']
+        print('{} ({}) {} - {} ({})'.format(next['name'], next['date_local'],
                                             rocket, lpad, locale))
