@@ -1,0 +1,2 @@
+# Python files always have lf endings
+*.py text eol=lf
